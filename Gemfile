@@ -21,7 +21,8 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 gem 'bootstrap-sass', '~> 3.3.7'
-gem 'haml'
+gem 'bootstrap-generators', '~> 3.3.4'
+gem 'haml-rails'
 
 # Authentication
 gem 'devise'
