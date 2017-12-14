@@ -1,0 +1,12 @@
+!!!
+%html
+  %head
+    %title Bugcycle
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    %link{:href => "//maxcdn.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.css", :rel => "stylesheet"}/
+    %link{:href => "//maxcdn.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.css", :rel => "stylesheet"}/
+  %body
+    .container
+      = yield
