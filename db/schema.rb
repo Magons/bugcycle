@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171214063146) do
+ActiveRecord::Schema.define(version: 20171217014427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,8 +18,34 @@ ActiveRecord::Schema.define(version: 20171214063146) do
   create_table "bicycles", force: :cascade do |t|
     t.string "name"
     t.text "description"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_bicycles_on_user_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "marks", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "bicycle_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bicycle_id"], name: "index_marks_on_bicycle_id"
+    t.index ["user_id"], name: "index_marks_on_user_id"
+  end
+
+  create_table "suggestions", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.bigint "bicycle_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bicycle_id"], name: "index_suggestions_on_bicycle_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -39,4 +65,8 @@ ActiveRecord::Schema.define(version: 20171214063146) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "bicycles", "users"
+  add_foreign_key "marks", "bicycles"
+  add_foreign_key "marks", "users"
+  add_foreign_key "suggestions", "bicycles"
 end

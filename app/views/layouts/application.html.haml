@@ -15,7 +15,7 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
-  %body
+  %body.container
     %nav.navbar.navbar-inverse.navbar-fixed-top{role: "navigation"}
       .container
         .navbar-header
@@ -24,18 +24,35 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          = link_to "Project name", "#", class: "navbar-brand"
-        #navbar.collapse.navbar-collapse
+          = link_to "Bugcycle", "#", class: "navbar-brand"
+        #navbar
           %ul.nav.navbar-nav
-            %li.active
-              %a{href: "#"} Home
-            %li
-              %a{href: "#about"} About
-            %li
-              %a{href: "#contact"} Contact
-    .container
+            %li{ class: current_page?(bicycles_path) ? 'active' : '' }
+              = link_to 'Find Bicycle', bicycles_path
+        %ul.nav.navbar-nav.navbar-right
+          - if current_user
+            %li.dropdown
+              %a.dropdown-toggle{'data-toggle': 'dropdown', href: '#'}
+                %span.glyphicon.glyphicon-cog
+                  = current_user.email
+                %b.caret
+              %ul.dropdown-menu
+                %li
+                  = link_to edit_user_registration_path(current_user) do
+                    %span.glyphicon.glyphicon-user.small
+                    = 'Profile'
+                %li.divider{ role: 'separator' }
+                %li
+                  = link_to destroy_user_session_path, method: :delete do
+                    %span.glyphicon.glyphicon-log-out.small
+                    = 'Log Out'
+          - else
+            %li= link_to 'Sign in', '#'
+            %li= link_to 'Sign up', '#'
+
+    .container.main
       - flash.each do |name, msg|
-        = content_tag :div, class: "alert alert-#{name == :error ? "danger" : "success" } alert-dismissable", role: "alert" do
+        = content_tag :div, class: "alert alert-#{name == 'alert' ? "danger" : "success" } alert-dismissable", role: "alert" do
           %button.close{type: "button", data: {dismiss: "alert"} }
             %span{aria: {hidden: "true"} } &times;
             %span.sr-only Close

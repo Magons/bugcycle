@@ -1,4 +1,5 @@
 class BicyclesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_bicycle, only: [:show, :edit, :update, :destroy]
 
   # GET /bicycles
