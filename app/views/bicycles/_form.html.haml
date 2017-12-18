@@ -19,5 +19,20 @@
     .col-sm-10
       = f.text_area :description, class: 'form-control'
   .form-group
+    = f.label :category, class: 'col-sm-2 control-label'
+    .col-sm-10.categories
+      = f.select :category_id, Category.all.collect {|c| [c.name, c.id]}, { prompt: 'Select Category' }, { class: 'form-control' }
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      %button.btn.btn-default.add-category Add Category
+  .form-group.category-form
+    = label_tag :category_name, nil, class: 'col-sm-2 control-label'
+    .col-sm-6
+      = text_field_tag :category_name, nil, class: 'form-control category-name'
+    .col-sm-4
+      %button.btn.btn-primary.create-category Create
+      %button.btn.btn-danger.cancel-category Cancel
+
+  .form-group
     .col-sm-offset-2.col-sm-10
       = f.submit class: 'btn btn-primary'
