@@ -1,8 +1,11 @@
 .page-header
-  = link_to new_bicycle_path, class: 'btn btn-primary' do
-    %span.glyphicon.glyphicon-plus
-    New Bicycle
-  %h1 Listing bicycles
+  %h1 Find Bicycle
+  .row
+    .col-md-12
+      .input-group
+        %input.form-control
+        %span.input-group-btn
+          %button.btn.btn-primary Go!
 
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover
@@ -10,15 +13,9 @@
       %tr
         %th Name
         %th Description
-        %th
-        %th
-        %th
 
     %tbody
       - @bicycles.each do |bicycle|
         %tr
           %td= bicycle.name
           %td= bicycle.description
-          %td= link_to 'Show', bicycle
-          %td= link_to 'Edit', edit_bicycle_path(bicycle)
-          %td= link_to 'Destroy', bicycle, data: { confirm: 'Are you sure?' }, method: :delete

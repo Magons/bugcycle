@@ -15,7 +15,7 @@ class BicyclesController < ApplicationController
 
   # GET /bicycles/new
   def new
-    @bicycle = Bicycle.new
+    @bicycle = current_user.bicycles.new
   end
 
   # GET /bicycles/1/edit
@@ -25,7 +25,7 @@ class BicyclesController < ApplicationController
   # POST /bicycles
   # POST /bicycles.json
   def create
-    @bicycle = Bicycle.new(bicycle_params)
+    @bicycle = current_user.bicycles.new(bicycle_params)
 
     respond_to do |format|
       if @bicycle.save
@@ -57,15 +57,19 @@ class BicyclesController < ApplicationController
   def destroy
     @bicycle.destroy
     respond_to do |format|
-      format.html { redirect_to bicycles_url, notice: 'Bicycle was successfully destroyed.' }
+      format.html { redirect_to my_bicycles_url, notice: 'Bicycle was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def my_bicycles
+    @bicycles = current_user.bicycles
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_bicycle
-      @bicycle = Bicycle.find(params[:id])
+      @bicycle = current_user.bicycles.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
