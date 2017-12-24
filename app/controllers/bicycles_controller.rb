@@ -5,7 +5,12 @@ class BicyclesController < ApplicationController
   # GET /bicycles
   # GET /bicycles.json
   def index
-    @bicycles = Bicycle.all
+    @bicycles = Bicycle.search(params[:search])
+
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @bicycles }
+    end
   end
 
   # GET /bicycles/1
