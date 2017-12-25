@@ -14,3 +14,19 @@
   %dd= @bicycle.description
   %dt Category:
   %dd= @bicycle.category.name
+
+%h2 Suggestions
+- @bicycle.suggestions.each do |suggestion|
+  %dl.dl-horizontal
+    %dt Name:
+    %dd= suggestion.name
+    %dt Description:
+    %dd= suggestion.description
+    %dt Category:
+    %dd= suggestion.category.name
+    %dt User:
+    %dd= suggestion.user.email
+    %dt
+    %dd
+      = link_to 'Accept', accept_bicycle_suggestion_path(@bicycle, suggestion), method: :put, class: 'btn btn-success'
+      = link_to 'Decline', bicycle_suggestion_path(@bicycle, suggestion), method: :delete, class: 'btn btn-danger'

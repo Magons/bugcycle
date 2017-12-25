@@ -13,9 +13,15 @@
       %tr
         %th Name
         %th Description
+        %th
 
     %tbody
       - @bicycles.each do |bicycle|
         %tr
           %td= bicycle.name
           %td= bicycle.description
+          %td
+            .pull-right
+              = link_to 'Make suggestion', new_bicycle_suggestion_path(bicycle), class: 'btn btn-warning'
+              = link_to new_bicycle_suggestion_path(bicycle), class: 'btn btn-default' do
+                %span.glyphicon.glyphicon-star-empty

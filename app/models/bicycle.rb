@@ -1,4 +1,5 @@
 class Bicycle < ApplicationRecord
+  has_many :suggestions
   belongs_to :user
   belongs_to :category
 
