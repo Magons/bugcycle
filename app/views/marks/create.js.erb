@@ -1,0 +1,8 @@
+var star = "mark-<%= @bicycle.id %>"
+<% if @mark.present? %>
+  $(`#${star} span`).addClass('glyphicon-star-empty')
+  $(`#${star} span`).removeClass('glyphicon-star')
+<% else %>
+  $(`#${star} span`).removeClass('glyphicon-star-empty')
+  $(`#${star} span`).addClass('glyphicon-star')
+<% end %>

@@ -14,6 +14,7 @@
           %td
             .pull-right
               = link_to 'Make suggestion', new_bicycle_suggestion_path(bicycle), class: 'btn btn-warning'
-              = link_to new_bicycle_suggestion_path(bicycle), class: 'btn btn-default' do
-                %span.glyphicon.glyphicon-star-empty
-  = will_paginate @bicycles, renderer: BootstrapPagination::Rails
+              = link_to bicycle_marks_path(bicycle), method: :post, remote: true, class: 'btn btn-default', id: "mark-#{bicycle.id}" do
+                %span.glyphicon{ class: "glyphicon-star#{bicycle.favorites?(current_user) ? '' : '-empty'}"}
+  .text-center
+    = will_paginate @bicycles, renderer: BootstrapPagination::Rails

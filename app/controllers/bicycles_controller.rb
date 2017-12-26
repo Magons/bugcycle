@@ -3,7 +3,9 @@ class BicyclesController < ApplicationController
   before_action :set_bicycle, only: [:show, :edit, :update, :destroy]
 
   def index
-    @bicycles = Bicycle.search(params[:search]).paginate(page: params[:page])
+    @bicycles = Bicycle.includes(:marks)
+                       .search(params[:search])
+                       .paginate(page: params[:page])
 
     respond_to do |format|
       format.html { render :index }
