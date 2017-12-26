@@ -2,33 +2,26 @@ class BicyclesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_bicycle, only: [:show, :edit, :update, :destroy]
 
-  # GET /bicycles
-  # GET /bicycles.json
   def index
-    @bicycles = Bicycle.search(params[:search])
+    @bicycles = Bicycle.search(params[:search]).paginate(page: params[:page])
 
     respond_to do |format|
       format.html { render :index }
       format.json { render json: @bicycles }
+      format.js { render :index }
     end
   end
 
-  # GET /bicycles/1
-  # GET /bicycles/1.json
   def show
   end
 
-  # GET /bicycles/new
   def new
     @bicycle = current_user.bicycles.new
   end
 
-  # GET /bicycles/1/edit
   def edit
   end
 
-  # POST /bicycles
-  # POST /bicycles.json
   def create
     @bicycle = current_user.bicycles.new(bicycle_params)
 
@@ -43,8 +36,6 @@ class BicyclesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /bicycles/1
-  # PATCH/PUT /bicycles/1.json
   def update
     respond_to do |format|
       if @bicycle.update(bicycle_params)
@@ -57,8 +48,6 @@ class BicyclesController < ApplicationController
     end
   end
 
-  # DELETE /bicycles/1
-  # DELETE /bicycles/1.json
   def destroy
     @bicycle.destroy
     respond_to do |format|
@@ -68,17 +57,17 @@ class BicyclesController < ApplicationController
   end
 
   def my_bicycles
-    @bicycles = current_user.bicycles
+    @bicycles = current_user.bicycles.paginate(page: params[:page])
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_bicycle
-      @bicycle = current_user.bicycles.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def bicycle_params
-      params.require(:bicycle).permit(:name, :description, :category_id)
-    end
+  def set_bicycle
+    @bicycle = current_user.bicycles.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def bicycle_params
+    params.require(:bicycle).permit(:name, :description, :category_id)
+  end
 end

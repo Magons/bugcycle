@@ -39,6 +39,9 @@ gem 'devise-bootstrap-views'
 # Authorize
 gem 'pundit'
 
+# Pagination
+gem 'will_paginate-bootstrap'
+
 # Random names
 gem 'haikunator'
 

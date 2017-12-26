@@ -2,26 +2,10 @@
   %h1 Find Bicycle
   .row
     .col-md-12
-      .input-group.bicycle-search
-        %input.form-control
-        %span.input-group-btn
-          %button.btn.btn-primary Go!
+      = form_tag bicycles_path, method: 'get', remote: true do
+        .input-group
+          = text_field_tag :search, nil, class: 'form-control'
+          %span.input-group-btn
+            = submit_tag 'Find', class: 'btn btn-primary'
 
-.table-responsive
-  %table.table.table-striped.table-bordered.table-hover
-    %thead
-      %tr
-        %th Name
-        %th Description
-        %th
-
-    %tbody
-      - @bicycles.each do |bicycle|
-        %tr
-          %td= bicycle.name
-          %td= bicycle.description
-          %td
-            .pull-right
-              = link_to 'Make suggestion', new_bicycle_suggestion_path(bicycle), class: 'btn btn-warning'
-              = link_to new_bicycle_suggestion_path(bicycle), class: 'btn btn-default' do
-                %span.glyphicon.glyphicon-star-empty
+= render 'bicyles_table'
