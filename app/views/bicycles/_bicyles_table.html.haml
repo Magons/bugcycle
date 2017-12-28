@@ -4,6 +4,7 @@
       %tr
         %th Name
         %th Description
+        %th Category
         %th
 
     %tbody
@@ -11,6 +12,7 @@
         %tr
           %td= bicycle.name
           %td= bicycle.description
+          %td= bicycle.category.name
           %td
             .pull-right
               = link_to 'Make suggestion', new_bicycle_suggestion_path(bicycle), class: 'btn btn-warning'

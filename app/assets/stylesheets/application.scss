@@ -11,3 +11,15 @@
 .page-header {
   margin-top: 0px;
 }
+
+.bicycle-search {
+  .search-field {
+    width: 70%;
+  }
+
+  .category-field {
+    width: 30%;
+    border-radius: 0;
+    -webkit-appearance: none;
+  }
+}

@@ -6,13 +6,12 @@ class Bicycle < ApplicationRecord
 
   validates :name, uniqueness: { case_sensitive: true }
 
-  def self.search(pattern)
-    if pattern.blank?
-      all
-    else
-      where('name LIKE ? OR description LIKE ?', "%#{pattern}%", "%#{pattern}%")
-    end
-  end
+  scope :filter_by_category, -> (category_id) {
+    category_id.present? ? where(category_id: category_id) : nil
+  }
+  scope :search, -> (pattern) {
+    pattern.blank? ? all : where('name LIKE ? OR description LIKE ?', "%#{pattern}%", "%#{pattern}%")
+  }
 
   def favorites?(user)
     marks.any? { |m| m.user_id == user.id }

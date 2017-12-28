@@ -3,8 +3,9 @@
   .row
     .col-md-12
       = form_tag bicycles_path, method: 'get', remote: true do
-        .input-group
-          = text_field_tag :search, nil, class: 'form-control'
+        .input-group.bicycle-search
+          = text_field_tag :search, nil, class: 'form-control search-field'
+          = select_tag :category_id, options_from_collection_for_select(Category.all, :id, :name), class: 'form-control category-field', prompt: 'Filter by category'
           %span.input-group-btn
             = submit_tag 'Find', class: 'btn btn-primary'
 
