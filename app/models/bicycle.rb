@@ -23,6 +23,10 @@ class Bicycle < ApplicationRecord
     marks.any? { |m| m.user_id == user.id }
   end
 
+  def has_suggestion?(user)
+    suggestions.any? { |s| s.user_id == user.id }
+  end
+
   def self.marked_ids(user_id)
     joins(:marks).where(marks: { user_id: user_id }).ids
   end

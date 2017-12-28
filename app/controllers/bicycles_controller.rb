@@ -3,7 +3,7 @@ class BicyclesController < ApplicationController
   before_action :set_bicycle, only: [:show, :edit, :update, :destroy]
 
   def index
-    @bicycles = Bicycle.includes(:marks, :category)
+    @bicycles = Bicycle.includes(:marks, :category, :suggestions)
                        .search(params[:search], current_user)
                        .filter_by_category(params[:category_id])
                        .paginate(page: params[:page])
