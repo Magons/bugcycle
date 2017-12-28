@@ -5,7 +5,8 @@
         %th Name
         %th Description
         %th Category
-        %th
+        %th.thin-column
+        %th.thin-column
 
     %tbody
       - @bicycles.each do |bicycle|
@@ -13,10 +14,10 @@
           %td= bicycle.name
           %td= bicycle.description
           %td= bicycle.category.name
-          %td
-            .pull-right
-              = link_to 'Make suggestion', new_bicycle_suggestion_path(bicycle), class: 'btn btn-warning'
-              = link_to bicycle_marks_path(bicycle), method: :post, remote: true, class: 'btn btn-default', id: "mark-#{bicycle.id}" do
-                %span.glyphicon{ class: "glyphicon-star#{bicycle.favorites?(current_user) ? '' : '-empty'}"}
+          %td.thin-column
+            = link_to bicycle_marks_path(bicycle), method: :post, remote: true, class: 'btn btn-default', id: "mark-#{bicycle.id}" do
+              %span.glyphicon{ class: "glyphicon-star#{bicycle.favorites?(current_user) ? '' : '-empty'}"}
+          %td.thin-column
+            = link_to 'Make suggestion', new_bicycle_suggestion_path(bicycle), class: 'btn btn-warning'
   .text-center
     = will_paginate @bicycles, renderer: BootstrapPagination::Rails

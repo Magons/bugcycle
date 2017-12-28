@@ -4,7 +4,7 @@ class BicyclesController < ApplicationController
 
   def index
     @bicycles = Bicycle.includes(:marks, :category)
-                       .search(params[:search])
+                       .search(params[:search], current_user)
                        .filter_by_category(params[:category_id])
                        .paginate(page: params[:page])
 
