@@ -28,6 +28,7 @@ class SuggestionsController < ApplicationController
   end
 
   def destroy
+    authorize @bicycle, :destroy?
     @suggestion.destroy
     respond_to do |format|
       format.html { redirect_to @bicycle, notice: 'Suggestion was successfully destroyed.' }
@@ -36,6 +37,7 @@ class SuggestionsController < ApplicationController
   end
 
   def accept
+    authorize @bicycle, :update?
     respond_to do |format|
       if @bicycle.update(
           name: @suggestion.name,
