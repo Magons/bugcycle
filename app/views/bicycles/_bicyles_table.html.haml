@@ -2,6 +2,7 @@
   %table.table.table-striped.table-bordered.table-hover
     %thead
       %tr
+        %th
         %th Name
         %th Description
         %th Category
@@ -11,14 +12,15 @@
     %tbody
       - @bicycles.each do |bicycle|
         %tr
-          %td= bicycle.name
+          %td= image_tag(bicycle.image.small_thumb)
+          %td= link_to bicycle.name, bicycle
           %td= bicycle.description
           %td= bicycle.category.name
           %td.thin-column
             = link_to bicycle_marks_path(bicycle), method: :post, remote: true, class: 'btn btn-default', id: "mark-#{bicycle.id}" do
               %span.glyphicon{ class: "glyphicon-star#{bicycle.favorites?(current_user) ? '' : '-empty'}"}
           %td.thin-column
-            - if bicycle.has_suggestion?(current_user)
+            - if bicycle.suggestion?(current_user)
               %span.text-success.text-center Suggestion done.
             - elsif bicycle.user_id != current_user.id
               = link_to 'Make suggestion', new_bicycle_suggestion_path(bicycle), class: 'btn btn-warning'

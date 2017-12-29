@@ -4,12 +4,15 @@ class Bicycle < ApplicationRecord
   belongs_to :user
   belongs_to :category
 
+  mount_uploader :image, ImageUploader
+
   validates :name, uniqueness: { case_sensitive: true }
 
-  scope :filter_by_category, -> (category_id) {
+  scope :filter_by_category, ->(category_id) {
     category_id.present? ? where(category_id: category_id) : nil
   }
-  scope :search, -> (pattern, user) {
+
+  scope :search, ->(pattern, user) {
     if pattern.blank?
       all
     else
@@ -23,7 +26,7 @@ class Bicycle < ApplicationRecord
     marks.any? { |m| m.user_id == user.id }
   end
 
-  def has_suggestion?(user)
+  def suggestion?(user)
     suggestions.any? { |s| s.user_id == user.id }
   end
 

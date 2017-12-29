@@ -13,8 +13,13 @@ User.create(
     }
   ]
 )
+
+USER_COUNTT = 20
+CATEGORIES_COUNT = 25
+BICYCLE_COUNT = 300
+
 # Create Users
-50.times do |t|
+USER_COUNTT.times do |t|
   begin
     User.create(
       email: Haikunator.haikunate(0, '') + '@example.com',
@@ -26,20 +31,25 @@ User.create(
 end
 
 # Create Categories
-50.times do |t|
+CATEGORIES_COUNT.times do |t|
   Category.create(name: Haikunator.haikunate(40))
 end
 
+file = File.open(Rails.root + "db/seeds_images/test.jpg")
 # Create Bicycles
-10000.times do |t|
+BICYCLE_COUNT.times do |t|
+  puts "Create #{t}"
   begin
     Bicycle.create(
+      image: file,
       name: Haikunator.haikunate(40),
       description: Haikunator.haikunate(40, ' '),
-      category: Category.find(rand(1..50)),
-      user: User.find(t < 100 ? 1 : rand(1..50))
+      category: Category.find(rand(1..CATEGORIES_COUNT)),
+      user: User.find(t < 30 ? 1 : rand(1..USER_COUNTT))
     )
   rescue ActiveRecord::RecordNotFound
     next
   end
 end
+
+file.close

@@ -9,7 +9,10 @@
       %ul
         - @bicycle.errors.full_messages.each do |msg|
           %li= msg
-
+  .form-group
+    = f.label :image, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.file_field :image, class: 'form-control file-upload', data: { text: @bicycle.image&.file&.filename }
   .form-group
     = f.label :name, class: 'col-sm-2 control-label'
     .col-sm-10

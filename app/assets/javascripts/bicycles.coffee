@@ -26,3 +26,7 @@ $ ->
         $('.categories select').append("<option value=#{data.id} selected='selected'>#{data.name}</option>")
       error: () ->
         alert('Something went wrong')
+
+  $('.file-upload').change (e) =>
+    $name = e.target.files[0].name
+    e.target.dataset.text = $name

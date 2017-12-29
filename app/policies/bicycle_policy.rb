@@ -3,6 +3,10 @@ class BicyclePolicy < ApplicationPolicy
     @record.user_id == user.id
   end
 
+  def edit?
+    update?
+  end
+
   def destroy?
     update?
   end

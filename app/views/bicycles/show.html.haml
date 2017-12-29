@@ -8,6 +8,8 @@
   %h1 Show bicycle
 
 %dl.dl-horizontal
+  %dt Image
+  %dd= image_tag(@bicycle.image.thumb)
   %dt Name:
   %dd= @bicycle.name
   %dt Description:
@@ -18,6 +20,8 @@
 %h2 Suggestions
 - @bicycle.suggestions.each do |suggestion|
   %dl.dl-horizontal
+    %dt Image
+    %dd= image_tag(suggestion.image.thumb)
     %dt Name:
     %dd= suggestion.name
     %dt Description:

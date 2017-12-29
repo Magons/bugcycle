@@ -1,6 +1,10 @@
 class BicyclesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_bicycle, only: [:show, :edit, :update, :destroy]
+  before_action :set_bicycle, only: %i[show edit update destroy]
+  before_action :authorize_record, only: %i[edit update destroy]
+
+  respond_to :html
+  respond_to :js, only: :index
 
   def index
     @bicycles = Bicycle.includes(:marks, :category, :suggestions)
@@ -8,69 +12,47 @@ class BicyclesController < ApplicationController
                        .filter_by_category(params[:category_id])
                        .paginate(page: params[:page])
 
-    respond_to do |format|
-      format.html { render :index }
-      format.json { render json: @bicycles }
-      format.js { render :index }
-    end
+    respond_with @bicycles
   end
 
-  def show
-  end
+  def show; end
 
   def new
-    @bicycle = current_user.bicycles.new
+    respond_with @bicycle = current_user.bicycles.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
-    @bicycle = current_user.bicycles.new(bicycle_params)
-
-    respond_to do |format|
-      if @bicycle.save
-        format.html { redirect_to @bicycle, notice: 'Bicycle was successfully created.' }
-        format.json { render :show, status: :created, location: @bicycle }
-      else
-        format.html { render :new }
-        format.json { render json: @bicycle.errors, status: :unprocessable_entity }
-      end
-    end
+    respond_with @bicycle = current_user.bicycles.new(bicycle_params)
   end
 
   def update
-    respond_to do |format|
-      if @bicycle.update(bicycle_params)
-        format.html { redirect_to @bicycle, notice: 'Bicycle was successfully updated.' }
-        format.json { render :show, status: :ok, location: @bicycle }
-      else
-        format.html { render :edit }
-        format.json { render json: @bicycle.errors, status: :unprocessable_entity }
-      end
-    end
+    @bicycle.update(bicycle_params)
+    respond_with @bicycle
   end
 
   def destroy
     @bicycle.destroy
-    respond_to do |format|
-      format.html { redirect_to my_bicycles_url, notice: 'Bicycle was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    respond_with @bicycle
   end
 
   def my_bicycles
     @bicycles = current_user.bicycles.paginate(page: params[:page])
+    respond_with @bicycles
   end
 
   private
 
   def set_bicycle
-    @bicycle = current_user.bicycles.find(params[:id])
+    @bicycle = Bicycle.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def bicycle_params
-    params.require(:bicycle).permit(:name, :description, :category_id)
+    params.require(:bicycle).permit(:name, :description, :category_id, :image)
+  end
+
+  def authorize_record
+    authorize @bicycle
   end
 end
